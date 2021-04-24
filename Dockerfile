@@ -5,9 +5,10 @@ COPY hello.go .
 
 RUN go get -d -v \
     && go install -v \
-    && GOOS=linux go build cmd/go \
-    && apk add --no-cache upx\
-    && upx --brute go
+    && go install -ldflags '-s' \
+    && go install -ldflags '-s -w'\
+    && GOOS=linux go build cmd/go 
+    
 ##
 
 FROM scratch
